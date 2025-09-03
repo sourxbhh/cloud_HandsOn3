@@ -1,0 +1,21 @@
+# The 'version' key is deprecated and no longer needed.
+# The structure is defined by the Compose specification itself.
+services:
+  web:
+    # Builds a Docker image from the Dockerfile in the current directory ('.')
+    build: .
+    # Forwards the host machine's port 8000 to the container's port 5000
+    ports:
+      - "8000:5000"
+    # Sets an environment variable to ensure Python output is sent
+    # straight to the terminal without being buffered first.
+    environment:
+      - PYTHONUNBUFFERED=1
+    # Makes sure the 'redis' service is started before the 'web' service starts.
+    depends_on:
+      - redis
+
+  redis:
+    # Pulls the official Redis image (with the 'alpine' tag for a smaller size)
+    # from Docker Hub. No build is needed.
+    image: "redis:alpine"
